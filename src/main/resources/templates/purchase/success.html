@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container my-5">
+        <div class="text-center">
+            <h1 class="text-success mb-4">Payment Successful!</h1>
+        </div>
+        <div class="card p-4 shadow-sm">
+            <p class="mb-3"><strong>Payment ID:</strong> <span th:text="${paymentId}"></span></p>
+            <p class="mb-3"><strong>Order ID:</strong> <span th:text="${orderId}"></span></p>
+            <p><strong>Signature:</strong> <span th:text="${signature}"></span></p>
+        </div>
+    </div>
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Show SweetAlert2 success message
+        Swal.fire({
+            icon: 'success',
+            title: 'Payment Successful!',
+            text: 'Your payment was processed successfully.',
+            confirmButtonText: 'OK',
+            timer: 3000 // Automatically close after 3 seconds
+        });
+    </script>
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

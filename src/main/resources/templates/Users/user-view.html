@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Details</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">User  Details</h1>
+        <table class="table table-bordered table-striped">
+            <tbody>
+                <tr>
+                    <th>First Name:</th>
+                    <td th:text="${user.firstname}"></td>
+                </tr>
+                <tr>
+                    <th>Last Name:</th>
+                    <td th:text="${user.lastname}"></td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td th:text="${user.useremail}"></td>
+                </tr>
+                <tr>
+                    <th>Address:</th>
+                    <td th:text="${user.address}"></td>
+                </tr>
+                <tr>
+                    <th>Country:</th>
+                    <td th:text="${user.country}"></td>
+                </tr>
+                <tr>
+                    <th>State:</th>
+                    <td th:text="${user.state}"></td>
+                </tr>
+                <tr>
+                    <th>City:</th>
+                    <td th:text="${user.city}"></td>
+                </tr>
+                <tr>
+                    <th>Zip Code:</th>
+                    <td th:text="${user.pincode}"></td>
+                </tr>
+                <tr>
+                    <th>Profile Image:</th>
+                    <td>
+                        <img th:src="@{'/uploads/' + ${user.profileimage}}" 
+                             alt="Profile Image" 
+                             class="img-thumbnail" 
+                             style="width: 50px; height: 50px;">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Password</th>
+                    <td th:text="${user.password}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-center">
+            <a href="/users" class="btn btn-primary">Back to List</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+        <link rel="stylesheet" th:href="@{/style/style.css}">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  
+</head>
+<body>
+<!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <!-- Logo and Brand -->
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="http://localhost:7070/images/logo.png" alt="Logo" class="me-2" style="width: 40px; height: 40px;"> Aapna-Market
+            </a>
+            <!-- Navbar Toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navbar Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/products/main}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+<section>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h3 class="text-center">Login</h3>
+
+                <!-- Display flash message if available -->
+                <div th:if="${message}" class="alert" th:classappend="${alertClass}" role="alert">
+    <div th:if="${message}" th:class="${alertClass}" th:utext="${message}"></div>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="closeErrorMessage()"></button>
+    
+                </div>
+
+                <!-- Display error message at the top -->
+                <div id="error-message" th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="btn-close" aria-label="Close" onclick="closeErrorMessage()"></button>
+                    <span th:text="${error}"></span>
+                </div>
+
+                <form th:action="@{/users/login}" method="post" class="bg-light p-4 shadow rounded">
+                    <!-- Identifier (Email or Firstname) -->
+                    <div class="mb-3">
+                        <label for="identifier" class="form-label">Email or First Name</label>
+                        <input type="text" id="identifier" name="identifier" class="form-control" placeholder="Enter your email or firstname" required>
+                        <div class="invalid-feedback" th:if="${errorIdentifier}">Invalid identifier</div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+                        <div class="invalid-feedback" th:if="${errorPassword}">Invalid password</div>
+                    </div>
+
+                    <!-- Role -->
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Role</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="role" id="user" value="user" required>
+                            <label class="form-check-label" for="user">Consumer </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="role" id="admin" value="admin" required>
+                            <label class="form-check-label" for="admin">Producer</label>
+                        </div>
+                        <div class="invalid-feedback" th:if="${errorRole}">Invalid role</div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+                <p class="text-center mt-3"><a href="#" th:href="@{/users/forgot}" >Forgot your password?</a></p>
+            </div>
+        </div>
+    </div>
+</section>		
+
+ <!-- Footer -->
+    <footer class="text-center py-4">
+        <div class="container">
+            <h5 class="mb-3">Join Aapna-market Today</h5>
+            <a th:href="@{/users/new}" class="btn btn-primary me-2">Start Buying</a>
+            <a th:href="@{/users/new}" class="btn btn-outline-light">Start Selling</a>
+            <p class="mt-3">&copy; 2024 Aapna-Market. All rights reserved.</p>
+        </div>
+    </footer>	
+    
+    
+    
+      <script>
+        window.onload = function () {
+            setTimeout(function() {
+                var errorMessage = document.getElementById('error-message');
+                if (errorMessage) {
+                    errorMessage.style.display = 'none';
+                }
+            }, 5000); // 5000 milliseconds = 5 seconds
+        };
+
+        function closeErrorMessage() {
+            var errorMessage = document.getElementById('error-message');
+            if (errorMessage) {
+                errorMessage.style.display = 'none';
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

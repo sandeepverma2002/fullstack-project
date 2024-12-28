@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Buy All Products</title>
+    <!-- Add your CSS and other head elements here -->
+</head>
+<body>
+
+    <div class="container">
+        <h1>Confirm Your Purchase</h1>
+
+        <table class="table" th:if="${cartItems.size() > 0}">
+            <thead>
+                <tr>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="product : ${cartItems}">
+                    <td th:text="${product.productName}"></td>
+                    <td th:text="${product.description}"></td>
+                    <td th:text="${product.price}"></td>
+                    <td th:text="${product.quantity}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <form th:action="@{/cart/confirm-purchase}" method="post">
+            <button type="submit" class="btn btn-success">Confirm Purchase</button>
+        </form>
+
+        <a th:href="@{/cart}" class="btn btn-secondary">Back to Cart</a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipment Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <!-- Logo and Brand -->
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="https://via.placeholder.com/40" alt="Logo" class="me-2" style="width: 40px; height: 40px;"> Aapna-Market
+            </a>
+            <!-- Navbar Toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navbar Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                      <li class="nav-item color nav-link" th:if="${loggedInUser != null}">
+    Welcome
+   <a class="color" th:href="@{/users/view2/{id}(id=${loggedInUser.id})}">
+        <span class="navcalor" th:text="${loggedInUser.firstname}"></span></a>
+</li>
+                    <li class="nav-item"><a class="nav-link" href="/products/index">Home</a></li>
+                    <!--                     <li class="nav-item"><a class="nav-link" href="#features-section">Features</a></li> -->
+                    <!-- <li class="nav-item"><a class="nav-link" href="#buy-section">Buy</a></li> -->
+                    <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/cart}">
+                            Cart <span class="badge bg-secondary" th:text="${cartItemCount}">0</span>
+                        </a>
+                    </li>
+                   <li class="nav-item" th:if="${loggedInUser != null}"><a class="nav-link" th:href="@{/users/logout}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <h2>Enter Shipment Details</h2>
+    <form th:action="@{/purchase/cartBuy}" method="post" th:object="${userDetails}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" th:field="*{name}" required>
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <textarea class="form-control" id="address" name="address" th:field="*{address}" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="pincode" class="form-label">Pincode</label>
+            <input type="text" class="form-control" id="pincode" name="pincode" th:field="*{pincode}" required>
+        </div>
+        <div class="mb-3">
+            <label for="mobilenumber" class="form-label">Mobile Number</label>
+            <input type="text" class="form-control" id="mobilenumber" name="mobilenumber" th:field="*{mobilenumber}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+    </form>
+
+</body>
+</html>

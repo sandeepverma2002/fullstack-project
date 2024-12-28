@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Payment</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <h1>Complete Your Payment</h1>
+
+    <!-- Razorpay Button -->
+    <form action="/payment/success" method="POST">
+     <script>
+    var razorpayOptions = {
+        "key": "YOUR_RAZORPAY_KEY_ID",  // Your Razorpay Key ID
+        "amount": amountInPaise,  // Amount in paise (100 paise = 1 INR)
+        "currency": "INR",
+        "order_id": "your_order_id",  // Razorpay order ID from backend
+        "name": "Your Company Name",
+        "description": "Transaction Description",
+        "image": "https://yourdomain.com/logo.png",
+        "handler": function (response) {
+            // Handle success
+            alert("Payment Success!");
+            // Send payment details to backend for verification
+        },
+        "prefill": {
+            "name": "Customer Name",
+            "email": "customer@example.com",
+            "contact": "1234567890"
+        },
+        "theme": {
+            "color": "#F37254"
+        }
+    };
+
+    var razorpayCheckout = new Razorpay(razorpayOptions);
+    document.getElementById("payButton").onclick = function() {
+        razorpayCheckout.open();
+    };
+</script>
+
+    </form>
+</body>
+</html>

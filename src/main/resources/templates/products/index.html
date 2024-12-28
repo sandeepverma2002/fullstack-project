@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Products</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        .card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .product-image {
+            height: 200px; /* Fixed height for uniformity */
+            object-fit: cover; /* aspect ratio */
+        }
+        .color {
+            color: white;
+        }
+ 
+    </style>
+    
+  
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <!-- Logo and Brand -->
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="http://localhost:7070/images/logo.png" alt="Logo" class="me-2" style="width: 40px; height: 40px;"> Aapna-Market
+            </a>
+            <!-- Navbar Toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navbar Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                      <li class="nav-item color nav-link" th:if="${loggedInUser != null}">
+    Welcome
+   <a class="color" th:href="@{/users/view2/{id}(id=${loggedInUser.id})}">
+        <span class="navcalor" th:text="${loggedInUser.firstname}"></span></a>
+</li>
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <!--                     <li class="nav-item"><a class="nav-link" href="#features-section">Features</a></li> -->
+                    <!-- <li class="nav-item"><a class="nav-link" href="#buy-section">Buy</a></li> -->
+                    <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/cart}">
+                            Cart <span class="badge bg-secondary" th:text="${cartItemCount}">0</span>
+                        </a>
+                    </li>
+                   <li class="nav-item" th:if="${loggedInUser != null}"><a class="nav-link" th:href="@{/users/logout}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- slides -->
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="background-image: url('http://localhost:7070/images/backgroundimg1.jpg'); height: 400px; background-size: cover;">
+                <div class="row h-100 align-items-center">
+                    <div class="col text-center text-white">
+                        <h1>Welcome to Aapna-Market</h1>
+                        <p>Your one-stop shop for all your needs!</p>
+                        <a href="#" class="btn btn-primary" onclick="showAlert()">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('http://localhost:7070/images/backgroundimg2.jpg'); height: 400px; background-size: cover;">
+                <div class="row h-100 align-items-center">
+                    <div class="col text-center text-white">
+                        <h1>Discover Amazing Products</h1>
+                        <p>Find what you love!</p>
+                        <a href="#" class="btn btn-primary" onclick="showAlert()">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('http://localhost:7070/images/backgroundimg4.jpg'); height: 400px; background-size: cover;">
+                <div class="row h-100 align-items-center">
+                    <div class="col text-center text-white">
+                        <h1>Exclusive Offers</h1>
+                        <p>Don't miss out on our deals!</p>
+                        <a href="#" class="btn btn-primary">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    
+<!-- Show Message if Available -->
+<div class="container mt-3">
+    <div th:if="${successMessage != null}" class="alert alert-success" id="error-message">
+        <span th:text="${successMessage}"></span>
+    </div>
+    <div th:if="${errorMessage != null}" class="alert alert-danger" id="error-message">
+        <span th:text="${errorMessage}"></span>
+    </div>
+</div>
+
+<!-- Product List -->
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Available Products</h1>
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="product : ${products}">
+            <div class="card">
+                <img th:src="@{'/uploads/' + ${product.productImage}}" class="card-img-top product-image" alt="Product Image">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${product.productName}">Product Name</h5>
+                    <p class="card-text" th:text="${product.description}">Product Description</p>
+                    <p class="card-text"><strong>Price: </strong><span th:text="${product.price}"></span></p>
+                    <p class="card-text"><strong>Quantity: </strong><span th:text="${product.quantity}"></span></p>
+                    <div class="d-flex justify-content-between">
+                        <!-- Add to Cart form with dynamic product ID -->
+                        <form th:action="@{/cart/add}" method="post">
+                            <input type="hidden" name="productId" th:value="${product.id}">
+                            <input type="number" name="quantity" value="1" min="1">
+                            <button type="submit" class="btn btn-primary">Add to Cart</button>
+                        </form>
+
+                        <!-- Buy Button (Redirects to a purchase page or checkout page) -->
+                        <form th:action="@{buy/{id}(id=${product.id})}" method="get">
+                            <button type="submit" class="btn btn-success">Buy</button>
+                        </form>
+                    </div>
+                    <a th:href="@{/products/{id}(id=${product.id})}" class="btn btn-link mt-2">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Reviews section -->
+
+<section id="testimonials" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">What Our Users Say</h2>
+            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <!-- First Slide -->
+                    <div class="carousel-item active">
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                    <img src="http://localhost:7070/images/review.jpg" width="80px" height="80px" alt="User 3" class="rounded-circle">
+                                <p class="testimonial mt-3">"Aapna-Market made it so easy to sell my products. The platform is intuitive and secure!"</p>
+                                <h6>- Sarah J.</h6>
+                            </div>
+                            <div class="col-md-4">
+                    <img src="http://localhost:7070/images/review.jpg" width="80px" height="80px" alt="User 3" class="rounded-circle">
+                                <p class="testimonial mt-3">"I found exactly what I needed in minutes. Highly recommend Aapna-Market!"</p>
+                                <h6>- David L.</h6>
+                            </div>
+                            <div class="col-md-4">
+                    <img src="http://localhost:7070/images/review.jpg" width="80px" height="80px" alt="User 3" class="rounded-circle">
+                                <p class="testimonial mt-3">"Amazing support and great features. I've grown my business significantly!"</p>
+                                <h6>- Emma W.</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Second Slide -->
+                    <div class="carousel-item">
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                    <img src="http://localhost:7070/images/review.jpg" width="80px" height="80px" alt="User 3" class="rounded-circle">
+                                <p class="testimonial mt-3">"The user experience is outstanding. I can't imagine using any other platform!"</p>
+                                <h6>- Michael T.</h6>
+                            </div>
+                            <div class="col-md-4">
+                    <img src="http://localhost:7070/images/review.jpg" width="80px" height="80px" alt="User 3" class="rounded-circle">
+                                <p class="testimonial mt-3">"Great customer service and a seamless shopping experience. Love it!"</p>
+                                <h6>- Olivia P.</h6>
+                            </div>
+                            <div class="col-md-4">
+                    <img src="http://localhost:7070/images/review.jpg" width="80px" height="80px" alt="User 3" class="rounded-circle">
+                                <p class="testimonial mt-3">"A fantastic platform! My products sell faster than anywhere else."</p>
+                                <h6>- John D.</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Carousel Controls -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- footer -->
+<section class="freedel-sec bg-nav">
+     <footer>
+        <div class="container-fluid p-0 border-top bg-light">
+            <div class="container py-5">
+                <div class="pb-4 border-bottom">
+                    <div class="row">
+                        <div class="col-md-4 d-flex">
+                            <div class="me-2">
+                                <i class="fas fa-map-marker-alt fa-2x"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">Find Us</h5>
+                                <p class="mb-0">The Panchkula, VermaTeam, Haryana Highway, Pachkula,Sector-25 - 134116</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 d-flex">
+                            <div class="me-2">
+                                <i class="fas fa-phone-alt fa-2x"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">Call Us</h5>
+                                <p class="mb-0"><a href="tel:1234567890" class="text-reset text-decoration-none">1234567890</a></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 d-flex">
+                            <div class="me-2">
+                                <i class="fas fa-envelope fa-2x"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">Mail Us</h5>
+                                <p class="mb-0"><a href="mailto:eshop@gmail.com" class="text-reset text-decoration-none">apnamarket@gmail.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- logo section -->
+                <div class="row pt-5">
+                    <div class="col-lg-5 col-md-12">
+                        <a href="#">
+                            <img src="http://localhost:7070/images/logo.png" alt="Logo" class="img-fluid mb-3">
+                        </a>
+                        <h5 class="fw-bold">Subscribe</h5>
+                        <div>
+                            <a href="https://twitter.com/" class="me-2 text-reset" target="_blank">
+                                <i class="fab fa-twitter fa-lg"></i>
+                            </a>
+                            <a href="https://instagram.com/" class="me-2 text-reset" target="_blank">
+                                <i class="fab fa-instagram fa-lg"></i>
+                            </a>
+                            <a href="https://youtube.com/" class="text-reset" target="_blank">
+                                <i class="fab fa-youtube fa-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7 col-md-12">
+                        <div class="row">
+                            <div class="col-4">
+                                <h5>Company</h5>
+                                <ul class="list-unstyled">
+                                    <li><a href="#" class="text-reset text-decoration-none">About Us</a></li>
+                                    <li><a href="#" class="text-reset text-decoration-none">Contact Us</a></li>
+                                    <li><a href="#" class="text-reset text-decoration-none">Products</a></li>
+                                    <li><a href="#" class="text-reset text-decoration-none">Categories</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-4">
+                                <h5>Legal</h5>
+                                <ul class="list-unstyled">
+                                    <li><a href="#" class="text-reset text-decoration-none ">Privacy Policy</a></li>
+                                    <li><a href="#" class="text-reset text-decoration-none">Terms & Conditions</a></li>
+                                    <li><a href="#" class="text-reset text-decoration-none">Return Policy</a></li>
+                                    <li><a href="#" class="text-reset text-decoration-none">Shipping Policy</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-4">
+                                <h5>Resources</h5>
+                                <ul class="list-unstyled">
+                                    <li><a href="#" class="text-reset text-decoration-none">Support</a></li>
+                                    <li><a href="https://play.google.com/" target="_blank" class="text-reset text-decoration-none">Android App</a></li>
+                                    <li><a href="https://www.apple.com/in/app-store/" target="_blank" class="text-reset text-decoration-none">iOS App</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center py-3 bg-dark text-white">
+                <a href="#" class="text-reset text-decoration-none">
+                    Copyright © 2024 - 2025 aapnamarket - ecommerce, All Rights Reserved VermaTeam.
+                </a>
+            </div>
+        </div>
+    </footer>
+    </section>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="@{/js/javascript.js}"></script>
+    
+      <script>
+    var errorMessage = document.getElementById("error-message");
+    
+    if (errorMessage) {
+        setTimeout(function() {
+            errorMessage.style.display = 'none';
+        }, 1000); 
+    }
+</script>
+</body>
+</html>

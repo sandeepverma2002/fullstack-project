@@ -1,0 +1,90 @@
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('@{images/nature19.jpg}') center/cover no-repeat;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        
+        .features-section img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
+        
+        .buy-sell img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+        
+        .testimonial img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+        }
+        
+        footer {
+            background: #343a40;
+            color: #ffffff;
+        }
+        
+       button.btn-close{
+	    position: relative;
+    left: 83rem;
+}
+.container {
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .border-radius-10 {
+        border-radius: 10px;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .text-primary {
+        color: #007bff;
+    }
+
+    .text-secondary {
+        color: #6c757d;
+    }
+
+    .text-muted {
+        color: #6c757d;
+    }
+
+    .bg-nav {
+        background-color: #343a40;
+    }
+
+    .text-white-50 {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .freedel-sec {
+        padding: 2rem 0;
+    }
+
+    .gap-3 {
+        gap: 1rem;
+    }
+
+    .download_section {
+        transition: transform 0.3s ease;
+    }
+
+    .download_section:hover {
+        transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+        .text-center {
+            padding: 1rem;
+        }
+    }
+  
+  
+ 
